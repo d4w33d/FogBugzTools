@@ -1,0 +1,7 @@
+#!/usr/bin/env php
+<?php
+
+require_once 'src' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+
+$cmd = new Command();
+$cmd->dispatch();

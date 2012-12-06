@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>FogBugz Whiteboard</title>
+    <link rel="stylesheet" type="text/css" href="../../template/sheet.css">
+  </head>
+
+  <body onload="window.print();">
+
+    <?php $sheetsCount = count($sheets); ?>
+    <?php foreach ($sheets as $sheet) { ?>
+
+      <p class="fixfor">Milestone &laquo; <?php echo (string) $fixFor->sFixFor; ?> &raquo;</p>
+      <h1>
+        Case <strong># <?php echo (string) $mainCase->ixBug; ?></strong>:
+        <?php echo (string) $mainCase->sTitle; ?>
+        <span class="page"><?php echo $sheet->num . '/' . $sheetsCount; ?></span>
+      </h1>
+
+      <div class="sheet">
+        <?php foreach ($sheet->rows as $row) { ?>
+          <div class="row">
+            <?php foreach ($row->cases as $case) { ?>
+              <?php require dirname(__file__) . DS . 'postit.phtml'; ?>
+            <?php } ?>
+          </div>
+        <?php } ?>
+      </div>
+
+    <?php } ?>
+
+  </body>
+
+</html>

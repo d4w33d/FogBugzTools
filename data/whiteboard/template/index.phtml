@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <title>FogBugz Whiteboard</title>
+    <link rel="stylesheet" type="text/css" href="../../template/index.css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+      var cases = [], current = -1;
+      <?php foreach ($this->mainCases as $case) { ?>
+        cases.push('case-<?php echo (string) $case->case->ixBug; ?>.html');
+      <?php } ?>
+
+      $(function() {
+        var bt = $('button');
+        bt.click(function() {
+          current++;
+          $('ul li').removeClass('current');
+          $('ul li:nth-child(' + (current + 1) + ')').addClass('current');
+          $('iframe').attr('src', cases[current]);
+          bt.html('Please wait...').attr('disabled', true);
+          setTimeout(function() {
+            bt.html('Print next case').attr('disabled', null);
+          }, 2500);
+        });
+      });
+    </script>
+  </head>
+
+  <body>
+
+    <div class="summary">
+      <h2>Sheets</h2>
+      <ul>
+        <?php foreach ($this->mainCases as $case) { ?>
+          <?php $children = trim((string) $case->case->ixBugChildren); ?>
+          <?php $children = $children ? explode(',', $children) : array(); ?>
+          <li>
+            <?php echo ceil(($case->childrenNum + 1) / 6); ?>
+            &times;
+            <?php echo (string) $case->case->sTitle; ?>
+          </li>
+        <?php } ?>
+      </ul>
+    </div>
+
+    <div class="printer">
+      <h2>Print</h2>
+      <button type="button">Start printing</button>
+    </div>
+
+    <iframe src="javascript:;"></iframe>
+
+  </body>
+
+</html>
