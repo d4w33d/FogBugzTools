@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * FogBugz API Reference:
+ * http://www.fogcreek.com/fogbugz/docs/70/topics/advanced/api.html
+ */
+
 class FogBugzClient
 {
 

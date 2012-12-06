@@ -8,7 +8,15 @@ class WhiteboardCommand extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->fgz = new FogBugzClient(Config::FOGBUGZ_ACCOUNT_EMAIL, Config::FOGBUGZ_ACCOUNT_PASSWORD);
+
+        $dir = ROOT_DIR . DS . 'data' . DS . 'whiteboard' . DS . 'generated';
+        if (!is_dir($dir))
+        {
+            mkdir($dir);
+        }
+
+        $this->fgz = new FogBugzClient(Config::FOGBUGZ_ACCOUNT_EMAIL,
+            Config::FOGBUGZ_ACCOUNT_PASSWORD);
     }
 
     public function executeGenerate($args, $opts)
@@ -200,7 +208,8 @@ class WhiteboardPrintableIndex
         $mainCases = $this->mainCases;
 
         ob_start();
-        require ROOT_DIR . DS . 'data' . DS . 'whiteboard' . DS . 'template' . DS . 'index.phtml';
+        require ROOT_DIR . DS . 'data' . DS . 'whiteboard' . DS . 'template'
+            . DS . 'index.phtml';
         $output = ob_get_contents();
         ob_end_clean();
         return $output;
@@ -208,8 +217,8 @@ class WhiteboardPrintableIndex
 
     public function save()
     {
-        $dir = ROOT_DIR . DS . 'data' . DS . 'whiteboard' . DS . 'generated' . DS
-            . 'milestone-' . (string) $this->fixFor->ixFixFor;
+        $dir = ROOT_DIR . DS . 'data' . DS . 'whiteboard' . DS . 'generated'
+            . DS . 'milestone-' . (string) $this->fixFor->ixFixFor;
         if (!is_dir($dir))
         {
             mkdir($dir);
